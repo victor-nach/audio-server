@@ -15,6 +15,7 @@ navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
   // that is the point at which the data now becomes availble
   mediaRecorder.ondataavailable = (e) => {
     // e.data is the sound itself, we the push this into the chunks array
+    console.log(e.data);
     chunks.push(e.data);
     console.log('data is available');
   };
@@ -30,6 +31,9 @@ navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
     const fd = new FormData();
     fd.append('firstName', 'John');
     fd.append('second', 'ooooh');
+    // wnen sending a sound blob, the first parameter stands as the field name
+    // in the same way you have field names for normal form fields can be accessed with req.file.fieldName
+    // the third name is used as the originalFileName `req.file.originalFileName`
     fd.append('soundBlob', blob, 'fileName.wav');
 
     const response = await fetch('/send_file', {
